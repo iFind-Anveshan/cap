@@ -8,7 +8,7 @@ st.title("French Image Caption App")
 # For newline
 st.write('\n')
 
-image = Image.open('images/image.png')
+image = Image.open('samples/val_000000039769.jpg')
 show = st.image(image, use_column_width=True)
 # show.image(image, 'Preloaded Image', use_column_width=True)
 
