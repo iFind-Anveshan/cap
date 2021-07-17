@@ -8,9 +8,9 @@ st.title("French Image Caption App")
 # For newline
 st.write('\n')
 
-image = Image.open('samples/val_000000039769.jpg')
-show = st.image(image, use_column_width=True)
-show.image(image, 'Preloaded Image', use_column_width=True)
+#image = Image.open('samples/val_000000039769.jpg')
+#show = st.image(image, use_column_width=True)
+#show.image(image, 'Preloaded Image', use_column_width=True)
 
 with st.spinner('Loading ViT-GPT2 model ...'):
 
@@ -27,6 +27,7 @@ uploaded_file = st.sidebar.file_uploader(" ", type=['png', 'jpg', 'jpeg'])
 if uploaded_file is not None:
 
     image = Image.open(uploaded_file)
+    show = st.image(image, use_column_width=True)
     show.image(image, 'Uploaded Image', use_column_width=True)
 
 
