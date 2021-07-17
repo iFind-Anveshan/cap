@@ -10,7 +10,7 @@ st.write('\n')
 
 image = Image.open('samples/val_000000039769.jpg')
 show = st.image(image, use_column_width=True)
-# show.image(image, 'Preloaded Image', use_column_width=True)
+show.image(image, 'Preloaded Image', use_column_width=True)
 
 with st.spinner('Loading ViT-GPT2 model ...'):
 
