@@ -1,6 +1,6 @@
 ---
 title: Image Caption French
-emoji: 🌖
+emoji: 🖼️
 colorFrom: pink
 colorTo: red
 sdk: streamlit
