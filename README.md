@@ -1,5 +1,5 @@
 ---
-title: Image Caption French Test
+title: Image Caption French
 emoji: 🌖
 colorFrom: pink
 colorTo: red
