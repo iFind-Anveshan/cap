@@ -44,7 +44,7 @@ st.sidebar.write('\n')
 
 with st.spinner('Generating image caption ...'):
 
-    caption, tokens, token_ids = predict(image)
+    caption, tokens, token_ids = predict_dummy(image)
 
     st.success(f'caption: {caption}')
     st.success(f'tokens: {tokens}')
