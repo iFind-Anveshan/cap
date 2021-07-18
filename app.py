@@ -27,7 +27,7 @@ with st.spinner('Loading and compiling ViT-GPT2 model ...'):
 st.sidebar.title("Select a sample image")
 
 sample_name = st.sidebar.selectbox(
-    "Please Choose the Model",
+    "Please choose an image",
     sample_fns
 )
 
@@ -45,10 +45,13 @@ with st.spinner('Generating image caption ...'):
 
     caption = predict(image)
     image.close()
-    caption_en = translator.translate(caption, src='fr', dest='en')
-    st.header('**Prediction**:')
-    st.subheader(f'{caption}\n')
-    st.subheader(f'**English Translation**: {caption_en}\n')
+    caption_en = translator.translate(caption, src='fr', dest='en').text
+    st.header(f'**Prediction (in French) **{caption}')
+    st.header(f'**English Translation**: {caption_en}')
 
 st.sidebar.header("ViT-GPT2 predicts:")
-st.sidebar.write(f"{caption}", '\n')
+st.sidebar.write(f"French: {caption}")
+st.sidebar.write(f"English: {caption_en}")
+
+show = st.sidebar.image(image, use_column_width=True)
+show.image(image, use_column_width=True)
