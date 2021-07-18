@@ -56,7 +56,7 @@ def predict(image):
     token_ids = np.array(generation.sequences)[0]
     caption = tokenizer.decode(token_ids)
     caption = caption.replace('<s>', '').replace('</s>', '').replace('<pad>', '')
-    caption = caption.replace("à l'arrière-plan", '').replace("Une photo en noir et blanc d'", '').replace("Une photo noire et blanche d'", '').replace("en arrière-plan", '')
+    caption = caption.replace("à l'arrière-plan", '').replace("Une photo en noir et blanc d'", '').replace("Une photo noire et blanche d'", '').replace("en arrière-plan", '').replac("Un gros plan d'", '').replace("un gros plan d'", '').replace("Une image d'", '')
     while '  ' in caption:
         caption = caption.replace('  ', ' ')
     caption = caption.strip()
