@@ -24,7 +24,7 @@ sample_name = st.sidebar.selectbox(
     sample_fns
 )
 
-sample_name = f'COCO_val2014_{sample_name.replace('.jpg', '').zfill(12)}.jpg'
+sample_name = f"COCO_val2014_{sample_name.replace('.jpg', '').zfill(12)}.jpg"
 sample_path = os.path.join(sample_dir, sample_name)
 
 image = Image.open(sample_path)
