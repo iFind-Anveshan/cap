@@ -38,7 +38,8 @@ with st.spinner('Generating image caption ...'):
 
     caption = predict(image)
     image.close()
-    st.success(f'caption: {caption}')
+    # st.success(f'{caption}')
+    st.header(f'{caption}')
 
 st.sidebar.header("ViT-GPT2 predicts:")
-st.sidebar.write(f"caption: {caption}", '\n')
+st.sidebar.write(f"{caption}", '\n')
