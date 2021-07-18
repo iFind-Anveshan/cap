@@ -21,7 +21,7 @@ filepath = hf_hub_download("flax-community/vit-gpt2", "checkpoints/ckpt_5/config
 shutil.copyfile(filepath, os.path.join(model_dir, 'config.json'))
 # copy model file
 filepath = hf_hub_download("flax-community/vit-gpt2", "checkpoints/ckpt_5/flax_model.msgpack")
-shutil.copyfile(filepath, os.path.join('flax_model.msgpack'))
+shutil.copyfile(filepath, os.path.join(model_dir, 'flax_model.msgpack'))
 
 flax_vit_gpt2_lm = FlaxViTGPT2LMForConditionalGeneration.from_pretrained(model_dir)
 
