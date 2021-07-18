@@ -1,4 +1,5 @@
 streamlit==0.84.1
 Pillow
 jax[cpu]
+flax
 transformers
