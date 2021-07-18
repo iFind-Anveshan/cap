@@ -3,3 +3,4 @@ Pillow
 jax[cpu]
 flax
 transformers
+huggingface_hub
