@@ -6,7 +6,7 @@ import numpy as np
 # Designing the interface
 st.title("🖼️ French Image Caption App")
 
-st.markdown(
+st.sidebar.markdown(
     """
     An image caption model [ViT-GPT2](https://huggingface.co/flax-community/vit-gpt2/tree/main) by combining the ViT model and a French GPT2 model.
     [Part of the [Huggingface JAX/Flax event](https://discuss.huggingface.co/t/open-to-the-community-community-week-using-jax-flax-for-nlp-cv/).]\n
@@ -22,7 +22,7 @@ st.markdown(
 with st.spinner('Loading and compiling ViT-GPT2 model ...'):
 
     from model import *
-    st.sidebar.write(f'Vit-GPT2 model loaded :)')
+    # st.sidebar.write(f'Vit-GPT2 model loaded :)')
 
 st.sidebar.title("Select a sample image")
 
@@ -50,10 +50,7 @@ with st.spinner('Generating image caption ...'):
     st.header(f'**English Translation**: {caption_en}')
 
 st.sidebar.header("ViT-GPT2 predicts:")
-st.sidebar.write(f"French: {caption}")
-st.sidebar.write(f"English: {caption_en}")
-
-show = st.sidebar.image(image, use_column_width=True)
-show.image(image, use_column_width=True)
+st.sidebar.write(f"**French**: {caption}")
+st.sidebar.write(f"**English**: {caption_en}")
 
 image.close()
