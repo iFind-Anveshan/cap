@@ -4,3 +4,4 @@ jax[cpu]
 flax
 transformers
 huggingface_hub
+googletrans==4.0.0-rc1

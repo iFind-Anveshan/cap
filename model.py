@@ -7,6 +7,9 @@ from transformers import ViTFeatureExtractor
 from transformers import GPT2Tokenizer
 from huggingface_hub import hf_hub_download
 
+from googletrans import Translator
+translator = Translator()
+
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_path)
 
@@ -57,6 +60,8 @@ def predict(image):
     while '  ' in caption:
         caption = caption.replace('  ', ' ')
     caption = caption.strip()
+    if caption:
+        caption = caption[0].upper() + caption[1:]
 
     return caption
 
