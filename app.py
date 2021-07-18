@@ -5,12 +5,11 @@ import numpy as np
 
 # Designing the interface
 st.title("French Image Caption App")
-# For newline
-st.write('\n')
 
 st.markdown(
     """
-    An image caption model by combining the ViT model and a French GPT2 model. [Part of the [Huggingface JAX/Flax event](https://discuss.huggingface.co/t/open-to-the-community-community-week-using-jax-flax-for-nlp-cv/).]\n
+    An image caption model [ViT-GPT2](https://huggingface.co/flax-community/vit-gpt2/tree/main) by combining the ViT model and a French GPT2 model.
+    [Part of the [Huggingface JAX/Flax event](https://discuss.huggingface.co/t/open-to-the-community-community-week-using-jax-flax-for-nlp-cv/).]\n
     The pretained weights of both models are loaded, with a set of randomly initialized cross-attention weigths.
     The model is trained on 65000 images from the COCO dataset for about 1500 steps, with the original english cpationis are translated to french for training purpose.
     """
