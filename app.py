@@ -29,7 +29,7 @@ sample_path = os.path.join(sample_dir, sample_name)
 
 image = Image.open(sample_path)
 show = st.image(image, use_column_width=True)
-show.image(image, '\nSelected Image', use_column_width=True)
+show.image(image, '\n\nSelected Image', use_column_width=True)
 
 # For newline
 st.sidebar.write('\n')
