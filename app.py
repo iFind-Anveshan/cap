@@ -4,7 +4,7 @@ import numpy as np
 
 
 # Designing the interface
-st.title("French Image Caption App")
+st.title("🖼️ French Image Caption App")
 
 st.markdown(
     """
