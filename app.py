@@ -40,15 +40,15 @@ show.image(image, 'Uploaded Image', use_column_width=True)
 # For newline
 st.sidebar.write('\n')
 
-if st.sidebar.button("Click here to get image caption"):
+# if st.sidebar.button("Click here to get image caption"):
 
-    with st.spinner('Generating image caption ...'):
+with st.spinner('Generating image caption ...'):
 
-        caption, tokens, token_ids = predict(image)
+    caption, tokens, token_ids = predict(image)
 
-        st.success(f'caption: {caption}')
-        st.success(f'tokens: {tokens}')
-        st.success(f'token ids: {token_ids}')
+    st.success(f'caption: {caption}')
+    st.success(f'tokens: {tokens}')
+    st.success(f'token ids: {token_ids}')
 
-    st.sidebar.header("ViT-GPT2 predicts:")
-    st.sidebar.write(f"caption: {caption}", '\n')
+st.sidebar.header("ViT-GPT2 predicts:")
+st.sidebar.write(f"caption: {caption}", '\n')
