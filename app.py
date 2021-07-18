@@ -10,11 +10,9 @@ st.write('\n')
 
 st.markdown(
     """
-    An image caption model by combining the ViT model and a French GPT2 model.\n
-    [Part of the [Huggingface JAX/Flax event](https://discuss.huggingface.co/t/open-to-the-community-community-week-using-jax-flax-for-nlp-cv/).]\n
-    The pretained weights of both models are loaded, and a set of randomly initialized cross-attention weigths are added.\n
-    The model is trained on 65000 images from the COCO dataset for about 1500 steps.\n
-    The original english cpationis are translated to french for training purpose.\n
+    An image caption model by combining the ViT model and a French GPT2 model. [Part of the [Huggingface JAX/Flax event](https://discuss.huggingface.co/t/open-to-the-community-community-week-using-jax-flax-for-nlp-cv/).]\n
+    The pretained weights of both models are loaded, with a set of randomly initialized cross-attention weigths.
+    The model is trained on 65000 images from the COCO dataset for about 1500 steps, with the original english cpationis are translated to french for training purpose.
     """
 )
 
