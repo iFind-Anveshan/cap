@@ -44,7 +44,7 @@ st.sidebar.write('\n')
 with st.spinner('Generating image caption ...'):
 
     caption = predict(image)
-    image.close()
+    
     caption_en = translator.translate(caption, src='fr', dest='en').text
     st.header(f'**Prediction (in French) **{caption}')
     st.header(f'**English Translation**: {caption_en}')
@@ -55,3 +55,5 @@ st.sidebar.write(f"English: {caption_en}")
 
 show = st.sidebar.image(image, use_column_width=True)
 show.image(image, use_column_width=True)
+
+image.close()
