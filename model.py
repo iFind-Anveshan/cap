@@ -52,6 +52,7 @@ def predict(image):
 
     token_ids = np.array(generation.sequences)[0]
     caption = tokenizer.decode(token_ids)
+    caption = caption.replace('<s>', '').replace('</s>', '').replace('<pad>', '')
 
     return caption
 
