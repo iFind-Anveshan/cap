@@ -4,7 +4,8 @@ import numpy as np
 
 
 # Designing the interface
-st.title("🖼️ French Image Caption App")
+st.title("🖼️ French Image Caption Demo")
+st.write("[Yih-Dar SHIEH](https://huggingface.co/ydshieh)")
 
 st.sidebar.markdown(
     """
@@ -51,6 +52,6 @@ with st.spinner('Generating image caption ...'):
 
 st.sidebar.header("ViT-GPT2 predicts:")
 st.sidebar.write(f"**French**: {caption}")
-st.sidebar.write(f"**English**: {caption_en}")
+st.sidebar.write(f"**English Translation**: {caption_en}")
 
 image.close()
