@@ -17,18 +17,24 @@ with st.spinner('Loading ViT-GPT2 model ...'):
     from model import *
     st.sidebar.write(f'Vit-GPT2 model loaded :)')
 
-st.sidebar.title("Upload Image")
+st.sidebar.title("Select a sample image")
 
-# Disabling warning
-st.set_option('deprecation.showfileUploaderEncoding', False)
-# Choose your own image
-uploaded_file = st.sidebar.file_uploader(" ", type=['png', 'jpg', 'jpeg'])
+sample_name = st.sidebar.selectbox(
+    "Please Choose the Model",
+    (
+        "sample 1",
+        "sample 2",
+        "sample 3",
+        "sample 4"
+    )
+)
 
-if uploaded_file is not None:
+sample_name = f'sample_{sample_name.split()[-1].zfill(2)}.jpg'
+sample_path = f'samples/{sample_name}'
 
-    image = Image.open(uploaded_file)
-    show = st.image(image, use_column_width=True)
-    show.image(image, 'Uploaded Image', use_column_width=True)
+image = Image.open(sample_path)
+show = st.image(image, use_column_width=True)
+show.image(image, 'Uploaded Image', use_column_width=True)
 
 
 # For newline
@@ -36,19 +42,13 @@ st.sidebar.write('\n')
 
 if st.sidebar.button("Click here to get image caption"):
 
-    if uploaded_file is None:
+    with st.spinner('Generating image caption ...'):
 
-        st.sidebar.write("Please upload an Image to Classify")
+        caption, tokens, token_ids = predict(image)
 
-    else:
+        st.success(f'caption: {caption}')
+        st.success(f'tokens: {tokens}')
+        st.success(f'token ids: {token_ids}')
 
-        with st.spinner('Generating image caption ...'):
-
-            caption, tokens, token_ids = predict(image)
-
-            st.success(f'caption: {caption}')
-            st.success(f'tokens: {tokens}')
-            st.success(f'token ids: {token_ids}')
-
-        st.sidebar.header("ViT-GPT2 predicts:")
-        st.sidebar.write(f"caption: {caption}", '\n')
+    st.sidebar.header("ViT-GPT2 predicts:")
+    st.sidebar.write(f"caption: {caption}", '\n')
