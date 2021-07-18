@@ -46,9 +46,9 @@ with st.spinner('Generating image caption ...'):
     caption = predict(image)
     image.close()
     caption_en = translator.translate(caption, src='fr', dest='en')
-    st.header('Prediction:')
+    st.header('**Prediction**:')
     st.subheader(f'{caption}\n')
-    st.subheader(f'English Translation: {caption_en}\n')
+    st.subheader(f'**English Translation**: {caption_en}\n')
 
 st.sidebar.header("ViT-GPT2 predicts:")
 st.sidebar.write(f"{caption}", '\n')
