@@ -21,34 +21,24 @@ st.sidebar.title("Select a sample image")
 
 sample_name = st.sidebar.selectbox(
     "Please Choose the Model",
-    (
-        "sample 1",
-        "sample 2",
-        "sample 3",
-        "sample 4"
-    )
+    sample_fns
 )
 
-sample_name = f'sample_{sample_name.split()[-1].zfill(2)}.jpg'
-sample_path = f'samples/{sample_name}'
+sample_name = f'COCO_val2014_{sample_name.replace('.jpg', '').zfill(12)}.jpg'
+sample_path = os.path.join(sample_dir, sample_name)
 
 image = Image.open(sample_path)
 show = st.image(image, use_column_width=True)
-show.image(image, 'Uploaded Image', use_column_width=True)
-
+show.image(image, 'Selected Image', use_column_width=True)
 
 # For newline
 st.sidebar.write('\n')
 
-# if st.sidebar.button("Click here to get image caption"):
-
 with st.spinner('Generating image caption ...'):
 
-    caption, tokens, token_ids = predict_dummy(image)
-
+    caption = predict_dummy(image)
+    image.close()
     st.success(f'caption: {caption}')
-    st.success(f'tokens: {tokens}')
-    st.success(f'token ids: {token_ids}')
 
 st.sidebar.header("ViT-GPT2 predicts:")
 st.sidebar.write(f"caption: {caption}", '\n')

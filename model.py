@@ -53,18 +53,21 @@ def predict(image):
     token_ids = np.array(generation.sequences)[0]
     caption = tokenizer.decode(token_ids)
 
-    return caption, token_ids
+    return caption
 
-def init():
+def compile():
 
     image_path = 'samples/val_000000039769.jpg'
     image = Image.open(image_path)
 
-    caption, token_ids = predict(image)
+    caption = predict(image)
     image.close()
 
 def predict_dummy(image):
     
-    return 'dummy caption!', ['dummy', 'caption', '!'], [1, 2, 3]
+    return 'dummy caption!'
 
-init()
+compile()
+
+sample_dir = './samples/'
+sample_fns = tuple([f"{int(f.replace('COCO_val2014_', '').replace('.jpg', ''))}.jpg" for f in os.listdir(sample_dir) if f.startswith('COCO_val2014_')])
