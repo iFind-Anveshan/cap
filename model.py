@@ -9,7 +9,7 @@ from transformers import GPT2Tokenizer
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_path)
 
-Main model -  ViTGPT2LM
+# Main model -  ViTGPT2LM
 from vit_gpt2.modeling_flax_vit_gpt2_lm import FlaxViTGPT2LMForConditionalGeneration
 
 model_name_or_path = 'flax-community/vit-gpt2/checkpoints/ckpt_5/'
