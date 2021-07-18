@@ -4,7 +4,7 @@ import numpy as np
 
 
 # Designing the interface
-st.title("🖼️ French Image Caption Demo 📝")
+st.title("🖼️ French Image Captioning Demo 📝")
 st.write("[Yih-Dar SHIEH](https://huggingface.co/ydshieh)")
 
 st.sidebar.markdown(
