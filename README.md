@@ -1,5 +1,5 @@
 ---
-title: Image Caption French
+title: French Image Captioning 
 emoji: 🖼️
 colorFrom: pink
 colorTo: red
