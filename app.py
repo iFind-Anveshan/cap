@@ -4,7 +4,7 @@ import numpy as np
 
 
 # Designing the interface
-st.title("🖼️ French Image Caption Demo")
+st.title("🖼️ French Image Caption Demo 📝")
 st.write("[Yih-Dar SHIEH](https://huggingface.co/ydshieh)")
 
 st.sidebar.markdown(
@@ -36,8 +36,8 @@ sample_name = f"COCO_val2014_{sample_name.replace('.jpg', '').zfill(12)}.jpg"
 sample_path = os.path.join(sample_dir, sample_name)
 
 image = Image.open(sample_path)
-show = st.image(image, use_column_width=True)
-show.image(image, '\n\nSelected Image', use_column_width=True)
+show = st.image(image, width=480)
+show.image(image, '\n\nSelected Image', width=480)
 
 # For newline
 st.sidebar.write('\n')
