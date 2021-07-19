@@ -9,7 +9,7 @@ st.write("[Yih-Dar SHIEH](https://huggingface.co/ydshieh)")
 
 st.sidebar.markdown(
     """
-    An image captioning model [ViT-GPT2](https://huggingface.co/flax-community/vit-gpt2/tree/main) by combining the ViT model and a French GPT2 model.
+    An image captioning model [ViT-GPT2](https://huggingface.co/flax-community/vit-gpt2) by combining the ViT model and a French GPT2 model.
     [Part of the [Huggingface JAX/Flax event](https://discuss.huggingface.co/t/open-to-the-community-community-week-using-jax-flax-for-nlp-cv/).]\n
     The GPT2 model source code is modified so it can accept an encoder's output.
     The pretained weights of both models are loaded, with a set of randomly initialized cross-attention weigths.
