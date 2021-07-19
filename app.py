@@ -13,7 +13,7 @@ st.sidebar.markdown(
     [Part of the [Huggingface JAX/Flax event](https://discuss.huggingface.co/t/open-to-the-community-community-week-using-jax-flax-for-nlp-cv/).]\n
     The GPT2 model source code is modified so it can accept an encoder's output.
     The pretained weights of both models are loaded, with a set of randomly initialized cross-attention weigths.
-    The model is trained on 65000 images from the COCO dataset for about 1500 steps, with the original english cpationis are translated to french for training purpose.
+    The model is trained on 65000 images from the COCO dataset for about 1500 steps (batch_size=256), with the original English cpationis being translated to French for training purpose.
     """
 )
 
