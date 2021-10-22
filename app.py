@@ -20,21 +20,23 @@ st.sidebar.markdown(
 with st.spinner('Loading and compiling ViT-GPT2 model ...'):
     from model import *
 
+random_image_id = get_random_image_id()
 
 st.sidebar.title("Select a sample image")
-image_id = st.sidebar.selectbox(
+sample_image_id = st.sidebar.selectbox(
     "Please choose a sample image",
     sample_image_ids
 )
 
-random_image_id = None
 if st.sidebar.button("Random COCO 2017 (val) images"):
     random_image_id = get_random_image_id()
+    sample_image_id = "None"
 
-if random_image_id is not None:
-    image_id = random_image_id
+image_id = random_image_id
+if sample_image_id != "None":
+    assert type(sample_image_id) == int
+    image_id = sample_image_id
 
-st.write(image_id)
 
 sample_name = f"COCO_val2017_{str(image_id).zfill(12)}.jpg"
 sample_path = os.path.join(sample_dir, sample_name)
@@ -45,9 +47,21 @@ else:
     url = f"http://images.cocodataset.org/val2017/{str(image_id).zfill(12)}.jpg"
     image = Image.open(requests.get(url, stream=True).raw)
 
-resized = image.resize(size=(384, 384))
-show = st.image(resized, width=384)
-show.image(resized, '\n\nSelected Image', width=384)
+width, height = image.size
+resized = image
+if height > 384:
+    width = int(width / height * 384)
+    height = 384
+    resized = resized.resize(size=(width, height))
+if width > 512:
+    width = 512
+    height = int(height / width * 512)
+    resized = resized.resize(size=(width, height))
+
+
+st.markdown(f"[{str(image_id).zfill(12)}.jpg](http://images.cocodataset.org/val2017/{str(image_id).zfill(12)}.jpg)")
+show = st.image(resized)
+show.image(resized, '\n\nSelected Image')
 resized.close()
 
 # For newline
