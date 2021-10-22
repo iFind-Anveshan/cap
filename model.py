@@ -20,6 +20,7 @@ files_to_download = [
     "tokenizer.json",
     "tokenizer_config.json",
     "vocab.json",
+    "preprocessor_config.json",
 ]
 
 # copy files from checkpoint hub:
