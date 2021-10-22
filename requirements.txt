@@ -2,6 +2,6 @@ streamlit==0.84.1
 Pillow
 jax[cpu]
 flax
-transformers
+git+https://github.com/ydshieh/transformers.git@flax_vision_encoder_decoder
 huggingface_hub
 googletrans==4.0.0-rc1
