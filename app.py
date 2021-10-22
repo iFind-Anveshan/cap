@@ -48,7 +48,7 @@ with st.spinner('Generating image caption ...'):
     caption = predict(image)
 
     caption_en = caption
-    st.header(f'**Prediction (in English) **{caption_en}')
+    st.header(f'**Prediction (in English)**: {caption_en}')
     
     # caption_en = translator.translate(caption, src='fr', dest='en').text
     # st.header(f'**Prediction (in French) **{caption}')
