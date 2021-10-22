@@ -1,11 +1,12 @@
+import json
 import os, shutil
+import random
+
+
 from PIL import Image
 import jax
 from transformers import FlaxVisionEncoderDecoderModel, ViTFeatureExtractor, AutoTokenizer
 from huggingface_hub import hf_hub_download
-
-from googletrans import Translator
-translator = Translator()
 
 
 # create target model directory
@@ -65,4 +66,13 @@ _compile()
 
 
 sample_dir = './samples/'
-sample_fns = tuple([f"{int(f.replace('COCO_val2014_', '').replace('.jpg', ''))}.jpg" for f in os.listdir(sample_dir) if f.startswith('COCO_val2014_')])
+sample_image_ids = tuple([int(f.replace('COCO_val2017_', '').replace('.jpg', '')) for f in os.listdir(sample_dir) if f.startswith('COCO_val2017_')])
+
+with open(os.path.join(sample_dir, "coco-val2017-img-ids.json"), "r", encoding="UTF-8") as fp:
+    coco_2017_val_image_ids = json.load(fp)
+
+
+def get_random_image_id():
+
+    image_id = random.sample(coco_2017_val_image_ids, k=1)[0]
+    return image_id
