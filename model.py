@@ -1,83 +1,67 @@
-import os, sys, shutil
-import numpy as np
+import os, shutil
 from PIL import Image
-
 import jax
-from transformers import ViTFeatureExtractor
-from transformers import GPT2Tokenizer
+from transformers import FlaxVisionEncoderDecoderModel, ViTFeatureExtractor, AutoTokenizer
 from huggingface_hub import hf_hub_download
 
 from googletrans import Translator
 translator = Translator()
 
-current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(current_path)
-
-# Main model -  ViTGPT2LM
-from vit_gpt2.modeling_flax_vit_gpt2_lm import FlaxViTGPT2LMForConditionalGeneration
 
 # create target model directory
 model_dir = './models/'
 os.makedirs(model_dir, exist_ok=True)
-# copy config file
-filepath = hf_hub_download("flax-community/vit-gpt2", "checkpoints/ckpt_5/config.json")
-shutil.copyfile(filepath, os.path.join(model_dir, 'config.json'))
-# copy model file
-filepath = hf_hub_download("flax-community/vit-gpt2", "checkpoints/ckpt_5/flax_model.msgpack")
-shutil.copyfile(filepath, os.path.join(model_dir, 'flax_model.msgpack'))
 
-flax_vit_gpt2_lm = FlaxViTGPT2LMForConditionalGeneration.from_pretrained(model_dir)
+files_to_download = [
+    "config.json",
+    "flax_model.msgpack",
+    "merges.txt",
+    "special_tokens_map.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "vocab.json",
+]
 
-vit_model_name = 'google/vit-base-patch16-224-in21k'
-feature_extractor = ViTFeatureExtractor.from_pretrained(vit_model_name)
+# copy files from checkpoint hub:
+for fn in files_to_download:
+    file_path = hf_hub_download("ydshieh/vit-gpt2-coco-en", f"ckpt_epoch_3_step_6900/{fn}")
+    shutil.copyfile(file_path, os.path.join(model_dir, fn))
 
-gpt2_model_name = 'asi/gpt-fr-cased-small'
-tokenizer = GPT2Tokenizer.from_pretrained(gpt2_model_name)
+model = FlaxVisionEncoderDecoderModel.from_pretrained(model_dir)
+feature_extractor = ViTFeatureExtractor.from_pretrained(model_dir)
+tokenizer = AutoTokenizer.from_pretrained(model_dir)
 
-max_length = 32
-num_beams = 8
+max_length = 16
+num_beams = 4
 gen_kwargs = {"max_length": max_length, "num_beams": num_beams}
 
 
 @jax.jit
-def predict_fn(pixel_values):
+def generate(pixel_values):
+    output_ids = model.generate(pixel_values, **gen_kwargs).sequences
+    return output_ids
 
-    return flax_vit_gpt2_lm.generate(pixel_values, **gen_kwargs)
 
 def predict(image):
 
-    # batch dim is added automatically
-    encoder_inputs = feature_extractor(images=image, return_tensors="jax")
-    pixel_values = encoder_inputs.pixel_values
+    pixel_values = feature_extractor(images=image, return_tensors="np").pixel_values
+    output_ids = generate(pixel_values)
+    preds = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
+    preds = [pred.strip() for pred in preds]
 
-    # generation
-    generation = predict_fn(pixel_values)
+    return preds[0]
 
-    token_ids = np.array(generation.sequences)[0]
-    caption = tokenizer.decode(token_ids)
-    caption = caption.replace('<s>', '').replace('</s>', '').replace('<pad>', '')
-    caption = caption.replace("à l'arrière-plan", '').replace("Une photo en noir et blanc d'", '').replace("Une photo noire et blanche d'", '').replace("en arrière-plan", '').replace("Un gros plan d'", '').replace("un gros plan d'", '').replace("Une image d'", '')
-    while '  ' in caption:
-        caption = caption.replace('  ', ' ')
-    caption = caption.strip()
-    if caption:
-        caption = caption[0].upper() + caption[1:]
 
-    return caption
-
-def compile():
+def _compile():
 
     image_path = 'samples/val_000000039769.jpg'
     image = Image.open(image_path)
-
     caption = predict(image)
     image.close()
 
-def predict_dummy(image):
-    
-    return 'dummy caption!'
 
-compile()
+_compile()
+
 
 sample_dir = './samples/'
 sample_fns = tuple([f"{int(f.replace('COCO_val2014_', '').replace('.jpg', ''))}.jpg" for f in os.listdir(sample_dir) if f.startswith('COCO_val2014_')])
