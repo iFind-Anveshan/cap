@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import io
 
 
 # Designing the interface
@@ -32,16 +33,27 @@ if st.sidebar.button("Random COCO 2017 (val) images"):
     random_image_id = get_random_image_id()
     sample_image_id = "None"
 
+bytes_data = None
+with st.sidebar.form("file-uploader-form", clear_on_submit=True):
+    uploaded_file = st.file_uploader("Choose a file")
+    submitted = st.form_submit_button("Upload")
+    if submitted and uploaded_file is not None:
+        bytes_data = io.BytesIO(uploaded_file.getvalue())
+    uploaded_file = None
+    submitted = None
+
 image_id = random_image_id
 if sample_image_id != "None":
     assert type(sample_image_id) == int
     image_id = sample_image_id
 
-
 sample_name = f"COCO_val2017_{str(image_id).zfill(12)}.jpg"
 sample_path = os.path.join(sample_dir, sample_name)
 
-if os.path.isfile(sample_path):
+if bytes_data is not None:
+    image = Image.open(bytes_data)
+    bytes_data = None
+elif os.path.isfile(sample_path):
     image = Image.open(sample_path)
 else:
     url = f"http://images.cocodataset.org/val2017/{str(image_id).zfill(12)}.jpg"
