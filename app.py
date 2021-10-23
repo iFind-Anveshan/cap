@@ -39,55 +39,59 @@ with st.sidebar.form("file-uploader-form", clear_on_submit=True):
     submitted = st.form_submit_button("Upload")
     if submitted and uploaded_file is not None:
         bytes_data = io.BytesIO(uploaded_file.getvalue())
-    uploaded_file = None
-    submitted = None
 
-image_id = random_image_id
-if sample_image_id != "None":
-    assert type(sample_image_id) == int
-    image_id = sample_image_id
+if (bytes_data is None) and submitted:
 
-sample_name = f"COCO_val2017_{str(image_id).zfill(12)}.jpg"
-sample_path = os.path.join(sample_dir, sample_name)
+    st.write("No file is selected to upload")
 
-if bytes_data is not None:
-    image = Image.open(bytes_data)
-    bytes_data = None
-elif os.path.isfile(sample_path):
-    image = Image.open(sample_path)
 else:
-    url = f"http://images.cocodataset.org/val2017/{str(image_id).zfill(12)}.jpg"
-    image = Image.open(requests.get(url, stream=True).raw)
 
-width, height = image.size
-resized = image
-if height > 384:
-    width = int(width / height * 384)
-    height = 384
-    resized = resized.resize(size=(width, height))
-if width > 512:
-    width = 512
-    height = int(height / width * 512)
-    resized = resized.resize(size=(width, height))
+    image_id = random_image_id
+    if sample_image_id != "None":
+        assert type(sample_image_id) == int
+        image_id = sample_image_id
 
+    sample_name = f"COCO_val2017_{str(image_id).zfill(12)}.jpg"
+    sample_path = os.path.join(sample_dir, sample_name)
 
-st.markdown(f"[{str(image_id).zfill(12)}.jpg](http://images.cocodataset.org/val2017/{str(image_id).zfill(12)}.jpg)")
-show = st.image(resized)
-show.image(resized, '\n\nSelected Image')
-resized.close()
+    if bytes_data is not None:
+        image = Image.open(bytes_data)
+    elif os.path.isfile(sample_path):
+        image = Image.open(sample_path)
+    else:
+        url = f"http://images.cocodataset.org/val2017/{str(image_id).zfill(12)}.jpg"
+        image = Image.open(requests.get(url, stream=True).raw)
 
-# For newline
-st.sidebar.write('\n')
+    width, height = image.size
+    resized = image.resize(size=(width, height))
+    if height > 384:
+        width = int(width / height * 384)
+        height = 384
+        resized = resized.resize(size=(width, height))
+    width, height = resized.size
+    if width > 512:
+        width = 512
+        height = int(height / width * 512)
+        resized = resized.resize(size=(width, height))
 
-with st.spinner('Generating image caption ...'):
+    if bytes_data is None:
+        st.markdown(f"[{str(image_id).zfill(12)}.jpg](http://images.cocodataset.org/val2017/{str(image_id).zfill(12)}.jpg)")
+    show = st.image(resized)
+    show.image(resized, '\n\nSelected Image')
+    resized.close()
 
-    caption = predict(image)
+    # For newline
+    st.sidebar.write('\n')
 
-    caption_en = caption
-    st.header(f'Predicted caption:\n\n')
-    st.subheader(caption_en)
+    with st.spinner('Generating image caption ...'):
 
-st.sidebar.header("ViT-GPT2 predicts:")
-st.sidebar.write(f"**English**: {caption}")
+        caption = predict(image)
 
-image.close()
+        caption_en = caption
+        st.header(f'Predicted caption:\n\n')
+        st.subheader(caption_en)
+
+    st.sidebar.header("ViT-GPT2 predicts: ")
+    st.sidebar.write(f"{caption}")
+
+    image.close()

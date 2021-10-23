@@ -47,6 +47,7 @@ def generate(pixel_values):
 def predict(image):
 
     pixel_values = feature_extractor(images=image, return_tensors="np").pixel_values
+
     output_ids = generate(pixel_values)
     preds = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
     preds = [pred.strip() for pred in preds]
@@ -58,7 +59,7 @@ def _compile():
 
     image_path = 'samples/val_000000039769.jpg'
     image = Image.open(image_path)
-    caption = predict(image)
+    predict(image)
     image.close()
 
 
