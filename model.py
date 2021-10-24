@@ -26,7 +26,7 @@ files_to_download = [
 
 # copy files from checkpoint hub:
 for fn in files_to_download:
-    file_path = hf_hub_download("ydshieh/vit-gpt2-coco-en", f"ckpt_epoch_3_step_6900/{fn}")
+    file_path = hf_hub_download("ydshieh/vit-gpt2-coco-en-ckpts", f"ckpt_epoch_3_step_6900/{fn}")
     shutil.copyfile(file_path, os.path.join(model_dir, fn))
 
 model = FlaxVisionEncoderDecoderModel.from_pretrained(model_dir)
