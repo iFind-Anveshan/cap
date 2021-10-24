@@ -46,6 +46,9 @@ def generate(pixel_values):
 
 def predict(image):
 
+    if image.mode != "RGB":
+        image = image.convert(mode="RGB")
+
     pixel_values = feature_extractor(images=image, return_tensors="np").pixel_values
 
     output_ids = generate(pixel_values)
