@@ -1,9 +1,14 @@
 import flask
-print("Loding model")
-# from model import *
 from PIL import Image
 app = flask.Flask(__name__)
-@app.route('/', methods = ['GET', 'POST'])
+
+
+print("Loding model")
+from model import *
+print("Modle Loaded")
+
+
+@app.route('/', methods = ['GET'])
 def welcome():
     return "Hello World"
 @app.route('/predict', methods = ['POST'])
@@ -36,4 +41,4 @@ def handle_request():
     return caption
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run(host='0.0.0.0')
